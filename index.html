@@ -45,6 +45,48 @@
     nav p:nth-child(2) { justify-self: center; }
     nav p:last-child  { justify-self: end; }
 
+    /* Mobile: hide the side items from the top nav */
+    @media (max-width: 600px) {
+  nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  nav p:first-child,
+  nav p:last-child {
+    display: none;
+  }
+
+  nav p {
+    font-size: 10px;
+  }
+}
+
+    /* Bottom bar — hidden on desktop */
+    #bottom-nav {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      #bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 20;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 24px;
+      }
+
+      #bottom-nav p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+    }
+
     a { text-decoration: none; color: black; }
     a:hover { color: rgb(255,255,255); }
 
@@ -147,12 +189,10 @@
       line-height: 1.65;
       text-transform: uppercase;
       color: #000000;
-      /* centered on cursor instead of offset, since it IS the cursor now */
       transform: translate(-50%, -50%);
       white-space: nowrap;
     }
 
-    /* When it's a full cursor replacement, always show (not just on logo hover) */
     #cursor-tooltip.always-visible {
       display: block;
     }
@@ -171,6 +211,12 @@
     <p>AUX STUDIO</p>
     <p>NY &amp; CA</p>
   </nav>
+
+  <!-- Mobile-only bottom bar -->
+  <div id="bottom-nav">
+    <p><a href="mailto:help@auxstudio.live">help@auxstudio.live</a></p>
+    <p>NY &amp; CA</p>
+  </div>
 
   <canvas id="dither-canvas"></canvas>
 
