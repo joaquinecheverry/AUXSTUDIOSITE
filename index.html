@@ -1,26 +1,32 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AUX Studio</title>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="MyWebSite" />
-<link rel="manifest" href="/site.webmanifest" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      width: 100vw;
-      height: 100vh;
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
       overflow: hidden;
       background: #ffffff;
+    }
+
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        /* top nav ~46px, bottom nav ~46px — padding balances them so flex center is true center */
+        padding-top: 46px;
+        padding-bottom: 46px;
+      }
     }
 
     /* Hide real cursor once activated */
@@ -51,22 +57,21 @@
     nav p:nth-child(2) { justify-self: center; }
     nav p:last-child  { justify-self: end; }
 
-    /* Mobile: hide the side items from the top nav */
     @media (max-width: 600px) {
-  nav {
-    display: flex;
-    justify-content: center;
-  }
+      nav {
+        display: flex;
+        justify-content: center;
+      }
 
-  nav p:first-child,
-  nav p:last-child {
-    display: none;
-  }
+      nav p:first-child,
+      nav p:last-child {
+        display: none;
+      }
 
-  nav p {
-    font-size: 10px;
-  }
-}
+      nav p {
+        font-size: 10px;
+      }
+    }
 
     /* Bottom bar — hidden on desktop */
     #bottom-nav {
@@ -116,6 +121,12 @@
       transition: transform 0.4s ease, opacity 0.3s ease;
     }
 
+    @media (max-width: 600px) {
+      #logo-wrap {
+        width: min(580px, 80vw);
+      }
+    }
+
     #logo-wrap svg path {
       fill: #ffffff;
       stroke: #000000;
@@ -148,15 +159,25 @@
       cursor: none;
     }
 
+    /* Spinner: positioned relative to logo center on all screen sizes */
     #spinner {
       position: fixed;
-      top: calc(50% + min(290px, 26vw) + 20px);
+      /* logo center is at 50% vertically (adjusted by margin-top above).
+         On desktop: logo height ≈ min(580px,52vw)/2 below center + gap */
+      top: calc(50% - 28.5px + min(290px, 26vw) + 20px);
       left: 50%;
       transform: translateX(-50%);
       width: 24px;
       height: 24px;
       z-index: 100;
       display: none;
+    }
+
+    /* On mobile: logo is 80vw wide → height ≈ 80vw (square SVG) → half = 40vw */
+    @media (max-width: 600px) {
+      #spinner {
+        top: calc(50% + 40vw + 20px);
+      }
     }
 
     #spinner.visible { display: block; }
